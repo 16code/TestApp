@@ -11,7 +11,6 @@ export default function Thumb({ source, size = '54y54', className, metaExtra, pl
     h = +h;
     const size2x = `${w * 2}y${h * 2}`;
     const boxSizeStyle = { width: px2rem(w), height: px2rem(h) };
-
     return (
         <figure className={classString} style={boxSizeStyle} {...rest}>
             <Img src={`${source}?param=${size2x}`} className={styles['ui-thumb-img']} lazyload />
