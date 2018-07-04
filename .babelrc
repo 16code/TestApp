@@ -1,0 +1,36 @@
+{
+    "presets": [
+        [
+            "env",
+            {
+                "targets": {
+                    "safari": 8,
+                    "firefox": 50,
+                    "chrome": 50
+                },
+                "modules": false,
+                "useBuiltIns": "entry",
+                "debug": false
+            }
+        ],
+        "react"
+    ],
+    "env": {
+        "production": {
+            "presets": ["react-optimize"]
+        }
+    },
+    "plugins": [
+        "transform-decorators-legacy",
+        "syntax-dynamic-import",
+        "transform-object-rest-spread",
+        "transform-class-properties"
+    ],
+    "ignore": [
+        "react.production.min.js",
+        "react-dom.production.min.js",
+		"react-router-dom.min.js",
+        "redux.min.js",
+        "react-redux.min.js"
+    ]
+}

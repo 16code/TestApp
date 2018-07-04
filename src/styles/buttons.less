@@ -1,0 +1,15 @@
+[role='button']:not(:disabled) {
+    cursor: pointer;
+}
+button {
+    outline: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    appearance: none;
+    border-width: 0;
+    background: transparent;
+    &:disabled {
+        cursor: not-allowed;
+    }
+}

@@ -1,0 +1,35 @@
+@import '~styles/variable.less';
+.box {
+    position: relative;
+    display: grid;
+    grid-row-gap: @box-padding-base;
+    margin-bottom: @box-padding-base;
+    &-header {
+        display: flex;
+        position: relative;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    &-title {
+        font-size: 0.18rem;
+        color: fade(@text-color, 80%);
+    }
+    &-extra {
+        font-size: 12px;
+        a {
+            color: @text-color;
+            display: inline-block;
+            line-height: 1;
+            margin-right: -6px;
+            &:hover {
+                color: @primary-color;
+            }
+        }
+        :global(.icon-more) {
+            font-size: 0.18rem;
+        }
+    }
+    &-body {
+        position: relative;
+    }
+}

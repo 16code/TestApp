@@ -1,0 +1,17 @@
+@import '~styles/variable.less';
+
+.playlist-item {
+    overflow: hidden;
+    position: relative;
+    &-count {
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: auto;
+        z-index: 3;
+        color: @ui-thumb-play-count-color;
+    }
+    &-control {
+        position: absolute;
+    }
+}

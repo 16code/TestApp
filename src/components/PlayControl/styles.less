@@ -1,0 +1,129 @@
+@import '~styles/variable.less';
+@import '~styles/iconfont.less';
+@import '~styles/mixins.less';
+@border-size: 0.18rem;
+
+@btn-size-default: 0.44rem;
+@font-size-default: 0.22rem;
+
+@btn-size-small: 0.38rem;
+@font-size-small: 0.22rem;
+
+@btn-size-large: 0.64rem;
+@font-size-large: 0.32rem;
+
+@btn-light-color : #fff;
+@btn-dark-color : #000;
+
+@overlay-shadow-color: rgba(0, 0, 0, 0.3);
+.ui-play-overlay {
+    &:extend(.pos-center all);
+    margin: auto;
+    width: @btn-size-default;
+    height: @btn-size-default;
+    z-index: 4;
+    border-radius: 100%;
+    opacity: 0;
+    transform: scale(0.7) translateZ(0);
+    transition-property: opacity, transform;
+    transition-duration: 0.5s;
+    background: #fff;
+    zoom: 1;
+    &[data-size='small'] {
+        width: @btn-size-small;
+        height: @btn-size-small;
+    }
+    &[data-size='large'] {
+        width: @btn-size-large;
+        height: @btn-size-large;
+    }
+}
+:global {
+    .btn-playpause {
+        font-size: 0;
+        background-color: transparent;
+        border: none;
+        color: rgba(0, 0, 0, 0.6);
+        width: @btn-size-default;
+        min-width: @btn-size-default;
+        height: @btn-size-default;
+        position: relative;
+        &:before {
+            content: '';
+            font-family: player-icon;
+            font-style: normal;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: inherit;
+            vertical-align: bottom;
+            display: inline-block;
+            text-decoration: inherit;
+            font-size: @font-size-default;
+            color: #333;
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border-radius: 500px;
+        }
+        &:before {
+            content: '\F132';
+        }
+        &.playing:before {
+            content: '\F130';
+        }
+        &.pending {
+            background-image: url('../../asstes/loading.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 16px 16px;
+            :local {
+                animation: spin 0.4s linear 20;
+            }
+            &::before {
+                content: '';
+            }
+        }
+    }
+    .btn-playpause.theme-light {
+        color: @btn-light-color;
+        &:after {
+            box-shadow: inset 0 0 0 2px @btn-light-color;
+        }
+    }
+    .btn-playpause.theme-dark {
+        color: @btn-dark-color;
+        &:after {
+            box-shadow: inset 0 0 0 2px @btn-dark-color;
+        }
+    }
+    .btn-playpause[data-size='large'] {
+        width: @btn-size-large;
+        min-width: @btn-size-large;
+        height: @btn-size-large;
+        &:before {
+            font-size: @font-size-large;
+        }
+    }
+    .btn-playpause[data-size='small'] {
+        width: @btn-size-small;
+        min-width: @btn-size-small;
+        height: @btn-size-small;
+        &:before {
+            font-size: @font-size-small;
+        }
+    }
+}
+@keyframes spin {
+    from {
+        transform: rotateZ(0);
+    }
+    to {
+        transform: rotateZ(1turn);
+    }
+}

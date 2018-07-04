@@ -1,0 +1,76 @@
+@import '~styles/variable.less';
+@import '~styles/mixins.less';
+@box-padding: 0.08rem;
+.song-item {
+    display: grid;
+    grid-template-columns: auto 1fr 0.72rem;
+    align-items: center;
+    padding: 0.08rem;
+    border-radius: @border-radius-base;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s;
+    grid-column-gap: @box-padding;
+    color: @text-color-secondary;
+    .user-select;
+    &.item-with-album {
+        grid-template-columns: auto 1fr 1.5rem 0.72rem;
+    }
+    &:not(:first-child)::after {
+        content: '';
+        position: absolute;
+        left: @box-padding;
+        right: @box-padding;
+        top: 0;
+        border-top: 1px solid rgba(120, 120, 120, 0.12);
+    }
+    &:hover {
+        background-color: rgba(120, 120, 120, 0.2);
+        [class^='ui-play-overlay'] {
+            opacity: 1;
+        }
+        &::after {
+            border-top-color: transparent;
+        }
+        & + .ui-list-item::after {
+            border-top-color: transparent;
+        }
+    }
+    .song-info {
+        .song-name {
+            display: inline-block;
+            color: @text-color;
+            font-size: 0.14rem;
+            max-width: 98%;
+            .ellipsis;
+        }
+        .song-meta {
+            font-size: 0.12rem;
+        }
+    }
+    a {
+        color: inherit;
+        &:hover {
+            text-decoration: underline;
+            color: fade(@text-color-secondary, 70%);
+        }
+    }
+    .song-extra {
+        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .duration {
+        display: inline-block;
+        padding-left: 0.1rem;
+        font-size: 0.13rem;
+    }
+    .album {
+        color: @text-color-secondary;
+        font-size: 0.12rem;
+        display: block;
+        .ellipsis;
+    }
+}

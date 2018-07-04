@@ -1,0 +1,75 @@
+@import '~styles/variable.less';
+@import '~styles/mixins.less';
+.player-thumb {
+    position: absolute;
+    width: @layout-sider-width - 0.01;
+    bottom: 100%;
+    z-index: 2;
+    display: grid;
+    padding: @box-padding-base / 2 @box-padding-base;
+    grid-column-gap: 0.1rem;
+    grid-template-columns: 0.58rem 1fr;
+    font-size: 0.14rem;
+    align-items: center;
+    color: @text-color-secondary;
+    border-top: 1px solid @border-color-base;
+    figure {
+        border-radius: @border-radius-base;
+        overflow: hidden;
+        width: 0.58rem;
+        height: 0.58rem;
+        background: rgb(230, 230, 230);
+        position: relative;
+        &:hover {
+            .btn-handle {
+                opacity: 1;
+            }
+        }
+    }
+    img {
+        vertical-align: middle;
+        width: 100%;
+        height: 100%;
+    }
+    .content {
+        overflow: hidden;
+    }
+    .singer,
+    .name {
+        display: block;
+        max-width: 100%;
+        .ellipsis;
+    }
+    .name {
+        color: @color-sky;
+        font-size: 0.15rem;
+    }
+    .singer {
+        font-size: 0.12rem;
+        display: block;
+        a {
+            color: inherit;
+            &:hover {
+                color: fade(@text-color-secondary, 70%);
+                text-decoration: underline;
+            }
+        }
+    }
+    .btn-handle {
+        background: transparent;
+        border: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.3s 0.1s;
+        > i {
+            font-size: 0.3rem;
+        }
+    }
+}

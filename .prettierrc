@@ -1,0 +1,18 @@
+{
+    "tabWidth": 4,
+    "printWidth": 120,
+    "trailingComma": "none",
+    "useTabs": false,
+    "eslintIntegration": true,
+    "stylelintIntegration": true,
+    "singleQuote": true,
+    "noBracketSpacing": false,
+    "jsxBracketSameLine": false,
+    "arrowParens": "avoid",
+    "overrides": [
+        {
+            "files": ".prettierrc",
+            "options": { "parser": "json" }
+        }
+    ]
+}

@@ -1,0 +1,65 @@
+.wave-spinner {
+    width: 26px;
+    display: none;
+    white-space: nowrap;
+    &,
+    > div {
+        height: 12px;
+        will-change: transform;
+        transform: translate3d(0, 0, 0);
+    }
+    > div {
+        display: inline-block;
+        position: relative;
+        top: -6px;
+        width: 1px;
+        background-color: @text-color;
+        margin: 0 2px;
+        animation-fill-mode: both;
+        animation: line-scale-pulse-out 0.9s -0.6s infinite cubic-bezier(0.85, 0.25, 0.37, 0.85);
+        vertical-align: middle;
+        &:nth-child(2),
+        &:nth-child(4) {
+            animation-delay: -0.4s;
+        }
+        &:first-child,
+        &:nth-child(5) {
+            animation-delay: -0.2s;
+        }
+    }
+    &.playing,
+    &.paused {
+        display: none;
+    }
+    &.paused > div {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes line-scale-pulse-out {
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+    50% {
+        transform: scale3d(1, 0.4, 1);
+    }
+    to {
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+.ajax-loading {
+    background-image: url('../asstes/loading.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 16px 16px;
+    animation: spin 0.4s linear 20;
+}
+@keyframes spin {
+    from {
+        transform: rotateZ(0);
+    }
+    to {
+        transform: rotateZ(1turn);
+    }
+}

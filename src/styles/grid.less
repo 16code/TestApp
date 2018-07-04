@@ -1,0 +1,19 @@
+.grid {
+    display: grid;
+    grid-gap: @box-padding-base * 2;
+    // margin-bottom: @box-padding-base * 2;
+}
+.grid-app-home-layout {
+    grid-template-columns: auto;
+}
+
+// @media (min-width: @screen-xs-min) {
+//     .grid-app-home-layout {
+//         grid-template-columns: auto;
+//     }
+// }
+@media (min-width: @screen-md-min) {
+    .grid-app-home-layout {
+        grid-template-columns: repeat(auto-fit, minmax(2.5rem, 1fr));
+    }
+}

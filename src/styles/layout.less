@@ -1,0 +1,104 @@
+@viewport {
+    zoom: 1;
+    width: device-width;
+}
+
+.full-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../asstes/bg-vector-2.png'), url('../asstes/bg-vector-1.png'),
+        linear-gradient(to bottom, #a17fe0, #5d26c1);
+    background-position: bottom left, top right;
+    background-size: 60px, 120px, 100%;
+    background-repeat: no-repeat;
+}
+.container-wrapper {
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.13);
+    border-radius: @border-radius-base;
+    background-color: @layout-body-background;
+    border-radius: 5px;
+    width: 1024px;
+    height: 658px;
+    overflow: hidden;
+    position: relative;
+    &::before {
+        content: '';
+        &:extend(.pos-center all);
+        z-index: 2;
+        background-repeat: no-repeat;
+        background-size: 130%;
+        background-position: center center;
+        transition: opacity 0.5s;
+        opacity: 0.1;
+    }
+    &.bg-loaded::before {
+        opacity: 1;
+    }
+}
+.grid-box {
+    display: grid;
+}
+.app-layout {
+    .grid-box;
+}
+.page-content {
+    opacity: 1;
+    padding: @box-padding-base;
+    height: 100%;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+    transition: opacity 0.35s;
+    -webkit-overflow-scrolling: touch;
+}
+[data-layout='root'] {
+    grid-gap: 0;
+    grid-template-columns: @layout-sider-width auto;
+    grid-template-rows: @layout-header-height auto @layout-player-height;
+    grid-template-areas: 'sidebar header' 'sidebar content' 'player player';
+    height: 100%;
+    width: 100%;
+    background-color: @layout-body-background;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    & .app-layout {
+        &-header {
+            grid-area: header;
+            // background: @layout-header-background;
+            padding: @layout-header-padding;
+            height: @layout-header-height;
+            line-height: @layout-header-height;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid @border-color-base;
+            position: relative;
+            z-index: 2;
+        }
+        &-content {
+            position: relative;
+            overflow: hidden;
+            // background: @layout-body-background;
+            grid-area: content;
+            z-index: 2;
+        }
+        &-sider {
+            // background: @layout-sider-background;
+            box-shadow: @layout-sider-boxshadow;
+            border-right: 1px solid @border-color-base;
+            min-width: @layout-sider-width;
+            grid-area: sidebar;
+            position: relative;
+            z-index: 9;
+            &-children {
+                padding-top: 0.1px;
+                margin-top: -0.1px;
+            }
+        }
+        &-player {
+            grid-area: player;
+            position: relative;
+            z-index: 10;
+        }
+    }
+}

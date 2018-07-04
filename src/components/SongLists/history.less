@@ -1,0 +1,68 @@
+@import '~styles/variable.less';
+@import '~styles/mixins.less';
+@box-padding: 0.08rem;
+.song-history-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 0.08rem 0.15rem;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+    grid-column-gap: @box-padding;
+    color: @text-color-secondary;
+    .user-select;
+    &:not(:first-child)::after,
+    &::before {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    &:not(:first-child)::after {
+        content: '';
+        right: 0;
+        border-top: 1px solid rgb(240, 240, 240);
+    }
+    &:hover {
+        background-color: rgb(240, 240, 240);
+        [class^='ui-play-overlay'] {
+            opacity: 1;
+        }
+    }
+    &.current {
+        background: rgb(240, 240, 240);
+        &::before {
+            content: '';
+            width: 2px;
+            height: 100%;
+            background: @color-sky;
+        }
+    }
+    .song-info {
+        .song-name {
+            max-width: 98%;
+            color: @text-color;
+            font-size: 0.14rem;
+            line-height: 1;
+            .ellipsis;
+        }
+        .song-meta {
+            font-size: 0.13rem;
+        }
+        a {
+            color: inherit;
+            &:hover {
+                color: fade(@text-color-secondary, 70%);
+                text-decoration: underline;
+            }
+        }
+    }
+    .song-extra {
+        text-align: right;
+    }
+
+    .duration {
+        display: inline-block;
+        font-size: 0.13rem;
+    }
+}

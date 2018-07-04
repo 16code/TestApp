@@ -1,0 +1,54 @@
+@import '~styles/variable.less';
+[class^='playlist-item-'],
+[class^='song-item-'] {
+    &:hover {
+        .ui-thumb-img {
+            transform: scale(1.2) translateZ(0);
+            transition: transform 0.75s cubic-bezier(0, 1, 0.75, 1);
+        }
+        [class^='ui-play-overlay'] {
+            opacity: 1;
+            transform: scale(1) translateZ(0);
+            transition-property: opacity, transform;
+            transition-duration: 0.6s;
+        }
+    }
+}
+
+.ui-thumb {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: @border-radius-base;
+    background: rgb(232, 233, 234);
+    a {
+        color: fade(@ui-thumb-link-color, 90%);
+        transition: color 0.3s;
+        font-size: 0.14rem;
+        text-align: justify;
+        display: inline-block;
+        &:hover {
+            text-decoration: underline;
+            color: @ui-thumb-link-color;
+        }
+    }
+    &-img {
+        object-fit: cover;
+        vertical-align: middle;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        will-change: transform;
+        transform: scale(1) translateZ(0);
+        transition: transform 0.75s, opacity 0.5s linear 0.2s;
+        pointer-events: none;
+    }
+    &-meta {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: @box-padding-base / 2;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.5));
+        z-index: 3;
+    }
+}

@@ -1,0 +1,283 @@
+@import '~styles/variable';
+@import '~styles/mixins';
+@cover-size: 2.2rem;
+.lyric-show {
+    display: grid;
+    padding: 0 0 0 0.26rem;
+    // grid-template-rows: auto auto;
+    grid-auto-rows: auto;
+    grid-row-gap: 0.2rem;
+    align-items: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    height: 90%;
+    .loading {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        background-size: 0.22rem 0.22rem;
+        background-position: center center;
+        width: 0.22rem;
+        height: 0.22rem;
+        margin: auto;
+    }
+    .music-lyrics {
+        display: grid;
+        grid-template-columns: 2.2rem 4.6rem;
+        grid-column-gap: 1rem;
+        align-items: center;
+    }
+    .lyrics-box {
+        contain: strict;
+        color: @text-color-secondary;
+        text-align: center;
+        overflow: hidden;
+        font-size: 0.13rem;
+        position: relative;
+        .user-select-text;
+        .loading {
+            left: 0;
+            right: 0;
+            z-index: 2;
+        }
+        .scrollbox {
+            transition: transform 0.5s ease-out;
+            position: relative;
+            max-width: 100%;
+        }
+        li {
+            list-style: none;
+            line-height: inherit;
+            // text-indent: 0.8rem;
+            max-width: 100%;
+            .ellipsis;
+            display: block;
+            transition: all 0.5s;
+        }
+        :global(.lrc-on) {
+            color: @color-sky;
+            transform: scale(1.08);
+        }
+    }
+}
+.album-box {
+    justify-self: left;
+    .cover {
+        position: relative;
+        display: grid;
+        align-items: center;
+        width: @cover-size;
+        height: @cover-size;
+        &.cover-loading {
+            .album {
+                background-image: url('../../asstes/default.jpg');
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            figure > img {
+                opacity: 0;
+            }
+        }
+    }
+    &[data-state='playing'],
+    &[data-state='paused'] {
+        .cover {
+            .cd {
+                will-change: transform;
+                transform: translateX(64%) scale(1);
+            }
+        }
+    }
+    &[data-state='playing'] {
+        .cover {
+            .tonearm {
+                transform: rotate(14deg);
+            }
+            .vinyl-discCover {
+                animation-play-state: running;
+                transform: translateZ(1);
+
+                // animation-play-state: paused;
+            }
+        }
+    }
+    &[data-state='paused'] {
+        .cover {
+            .tonearm {
+                transform: rotate(-10deg);
+            }
+            .vinyl-discCover {
+                animation-play-state: paused;
+            }
+        }
+    }
+    .cd {
+        width: 80%;
+        height: 80%;
+        overflow: hidden;
+        &:extend(.pos-center all);
+        margin: auto;
+        z-index: 1;
+        border-radius: 50%;
+        transform: translateX(30%) scale(0.8);
+        transition: all 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+        contain: strict;
+        &::before {
+            content: '';
+            background: url('../../asstes/cd_mask.png') no-repeat center;
+            background-size: cover;
+            &:extend(.pos-center all);
+            z-index: 2;
+        }
+        .vinyl-discCover {
+            border-radius: 50%;
+            transition: transform 0.5s;
+            animation: spinAround 12s linear infinite forwards;
+            animation-play-state: paused;
+            transform-origin: 50% 50%;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 1;
+        }
+    }
+    .album {
+        box-shadow: -12px 7px 19px 0px rgba(0, 0, 0, 0.22);
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+        overflow: hidden;
+        z-index: 2;
+        contain: strict;
+        &::before {
+            content: '';
+            &:extend(.pos-center all);
+        }
+        &::before {
+            z-index: 3;
+        }
+        > img {
+            mask: url('../../asstes/mask.png');
+            mask-repeat: no-repeat;
+            mask-position: right center;
+            mask-size: contain;
+            border-radius: 6px;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            z-index: 2;
+            transform: scale(1.04);
+        }
+    }
+    .tonearm {
+        background: url('../../asstes/tonearm.png') no-repeat right center;
+        background-size: 0.79rem 0.24rem;
+        position: absolute;
+        top: 0.1rem;
+        right: -15%;
+        width: 0.79rem;
+        height: 0.24rem;
+        z-index: 3;
+        transition: all 0.3s;
+        transform-origin: 0 50%;
+        transform: rotate(-10deg);
+        display: block;
+    }
+    :local {
+        @keyframes spinAround {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    }
+}
+.actions {
+    padding: 0.3rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, 0.42rem);
+    margin-left: auto;
+    margin-right: auto;
+    width: 0.42rem * 4;
+    justify-items: center;
+    .btn {
+        appearance: none;
+        padding: 0;
+        color: @color-sky;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .icon {
+        font-size: 0.2rem;
+        color: inherit;
+    }
+}
+
+.music-meta {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-row-gap: 0.04rem;
+    padding: 0.1rem 0 0;
+    .meta span {
+        padding-right: 0.1rem;
+        color: fade(@text-color-secondary, 55%);
+    }
+    a {
+        color: inherit;
+        &:hover {
+            color: fade(@text-color-secondary, 70%);
+            text-decoration: underline;
+        }
+    }
+    .singer,
+    .album,
+    .alia {
+        font-size: 0.13rem;
+    }
+}
+.header-title {
+    display: grid;
+    grid-template-areas: 'name quality handle';
+    grid-template-columns: auto minmax(0.85rem, 1fr) auto;
+    align-items: flex-end;
+    grid-column-gap: 0.06rem;
+    position: relative;
+    padding-right: 0.16rem;
+    .name {
+        font-size: 0.28rem;
+        font-weight: normal;
+        line-height: 28px;
+        max-width: 100%;
+        grid-area: name;
+        .ellipsis;
+    }
+    .quality {
+        grid-area: quality;
+        &::after {
+            content: 'K';
+        }
+    }
+    :global(.badge) {
+        margin-right: 0.06rem;
+        transform: scale(0.94);
+    }
+    .btn-group {
+        grid-area: handle;
+        justify-self: end;
+    }
+    .toggle-modal {
+        font-size: 0.28rem;
+        color: @text-color-secondary;
+        transition: all 0.3s;
+        &:hover {
+            color: @color-sky;
+        }
+        > i {
+            font-size: inherit;
+        }
+    }
+}

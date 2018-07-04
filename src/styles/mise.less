@@ -1,0 +1,54 @@
+.color {
+    display: inline-block;
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 2px;
+    &-music {
+        &-recommend {
+            background-color: @color-chill;
+        }
+        &-new {
+            background-color: @color-sky;
+        }
+        &-top {
+            background-color: @color-coral;
+        }
+    }
+    &-playlist {
+        &-hot {
+            background-color: @color-green;
+        }
+    }
+}
+
+.overlay {
+    line-height: 1;
+    color: #fff;
+    position: absolute;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -20px;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.4s linear 0.1s, box-shadow 0.5s ease-in-out;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    &:hover {
+        box-shadow: 0 0 0 320px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.number {
+    font-family: TrebuchetMS, Rotobo, Microsoft YaHei, sans-serif;
+}
+
+.lazyimg {
+    opacity: 0;
+    transition: opacity 0.5s linear 0.2s;
+    background: rgb(232, 233, 234);
+    &.loaded {
+        opacity: 1;
+    }
+}

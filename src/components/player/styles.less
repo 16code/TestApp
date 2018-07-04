@@ -1,0 +1,91 @@
+@import '~styles/variable.less';
+@import '~styles/mixins.less';
+@bar-color: #000;
+.audio-player {
+    height: @layout-player-height;
+    display: grid;
+    grid-template-columns: @layout-sider-width 1fr auto;
+    align-items: center;
+    // background: @layout-player-background;
+    border-top: 1px solid @border-color-base;
+
+    .user-select;
+    :global {
+        .player-controls.left-controls {
+            height: 100%;
+        }
+    }
+    .player-extra {
+        display: grid;
+        grid-template-columns: 0.42rem 1fr 0.42rem;
+        grid-column-gap: 0.12rem;
+        align-items: center;
+    }
+    .player-time {
+        display: block;
+        font-family: TrebuchetMS, Rotobo, 'Microsoft YaHei', sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 0.12rem;
+        contain: paint;
+        &.current,
+        &.duration {
+            align-self: center;
+            text-align: center;
+        }
+    }
+    .bar-preload {
+        background: lighten(@progress-bar-color, 24%);
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 100%;
+        z-index: 2;
+        border-radius: inherit;
+        transition: width 0.75s @ease-in 0.15s;
+    }
+    .player-controls {
+        display: grid;
+        width: 100%;
+        text-align: center;
+        align-items: center;
+        &.left-controls {
+            grid-template-columns: 1fr 0.54rem 1fr;
+            grid-column-gap: 0.04rem;
+        }
+        &.right-controls {
+            grid-template-columns: 38px 38px 38px;
+            grid-column-gap: 0.04rem;
+            padding-right: @box-padding-base;
+        }
+        color: @player-color;
+        :global {
+            .btn-playpause {
+                justify-self: center;
+                &:before {
+                    color: @player-color;
+                }
+                &:after {
+                    box-shadow: inset 0 0 0 2px @player-color;
+                }
+            }
+        }
+        .control-button {
+            color: inherit;
+            width: 38px;
+            min-width: 38px;
+            height: 38px;
+            position: relative;
+            transition: all 0.3s;
+            display: inline-block;
+            &:first-child {
+                justify-self: end;
+            }
+            &:last-child {
+                justify-self: start;
+            }
+        }
+    }
+}

@@ -1,0 +1,64 @@
+@font-face {
+    font-family: player-icon;
+    src: url('../asstes/fonts/player_ctrl.woff2') format('woff2'),
+        url('../asstes/fonts/player_ctrl.woff') format('woff'), url('../asstes/fonts/player_ctrl.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.iconplayer {
+    display: inline-block;
+    font-style: normal;
+    &:before,
+    &:after {
+        font-family: player-icon;
+        font-style: normal;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        vertical-align: bottom;
+        display: inline-block;
+        text-decoration: inherit;
+        font-size: 0.22rem;
+        line-height: 1;
+    }
+}
+.icon-skip-back:before {
+    content: '\F146';
+}
+.icon-skip-forward:before {
+    content: '\F148';
+}
+.icon-play:before {
+    content: '\F132';
+}
+.icon-pause:before {
+    content: '\F130';
+}
+.icon-queue:before {
+    content: '\F13A';
+}
+.icon-volume:before {
+    content: '\F15E';
+}
+.icon-shuffle:before {
+    content: '\F144';
+}
+.icon-repeat:before {
+    content: '\F13E';
+}
+.icon-repeatonce:before {
+    content: '\F200';
+}
+.icon-volume:before {
+    content: '\F15E';
+}
+.icon-volume-off:before {
+    content: '\F1EF';
+}
+.icon-volume-onewave:before {
+    content: '\F203';
+}
+.icon-volume-twowave:before {
+    content: '\F206';
+}

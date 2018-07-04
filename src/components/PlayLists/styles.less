@@ -1,0 +1,21 @@
+@import '~styles/variable.less';
+.ui-playlists {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(1.8rem, 1fr));
+    grid-gap: @box-padding-base;
+    // 横向滚动
+    &[data-layout='horizontal'] {
+        overflow: hidden;
+        overflow-x: scroll;
+        .scrolling-wrapper {
+            display: grid;
+            grid-gap: inherit;
+            grid-template-columns: repeat(auto-fit, minmax(1.8rem, 1fr));
+            -webkit-overflow-scrolling: touch;
+            &::scrollbar,
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    }
+}

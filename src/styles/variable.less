@@ -1,0 +1,109 @@
+@font-family-base : "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family : "Monospaced Number", @font-family-base;
+@font-size-base : 0.16rem;
+@line-height-base : 1.5;
+
+@primary-color: #1890ff;
+@color-primary: @primary-color;
+@color-sky: #5352ed;
+@color-chill: #1e90ff;
+@color-coral: #ff7f50;
+@color-green: #2ed573;
+@color-green-light: #20bf6b;
+
+@color-orange: #ffa502;
+@color-tomato: #ff6348;
+@color-blue: #70a1ff;
+@color-pink: #ff6b81;
+
+@text-color : fade(#000, 70%);
+@text-color-secondary : fade(#000, 45%);
+@ui-thumb-link-color : #fff;
+@ui-thumb-play-count-color : #fff;
+
+@border-color-base: rgba(0, 0, 0, 0.12);
+
+@body-bg : #fff;
+
+@box-padding-base : 0.16rem;
+@border-radius-base : 4px;
+
+@layout-prefix-cls: 'app-layout';
+@zindex-affix: 999;
+// Layout
+@bg-base: rgba(255, 255, 255, 0.85);
+@layout-body-background : @bg-base;
+@layout-header-background : @bg-base;
+@layout-footer-background : @layout-body-background;
+@layout-player-height : 0.68rem;
+@layout-header-height : 0.68rem;
+@layout-header-padding : 0 @box-padding-base;
+@layout-footer-padding : 0.24rem @box-padding-base;
+
+@layout-sider-background : @bg-base;
+@layout-sider-boxshadow : 1px 0 4px rgba(0, 0, 0, 0.03);
+@layout-sider-border-color : 1px solid rgba(0, 0, 0, 0.09);
+
+@layout-sider-width: 2rem;
+
+@layout-player-background : @bg-base;
+@layout-player-boxshadow : 1px 0 4px rgba(0, 0, 0, 0.03);
+@layout-player-border-color : 1px solid rgba(0, 0, 0, 0.09);
+// Layout light theme
+@layout-sider-background-light : #fff;
+@layout-trigger-background-light: #fff;
+
+@player-color: @color-sky;
+
+@progress-bar-color: @color-sky;
+@progress-slider-color: #d5d6d7;
+
+@volume-bar-color: @progress-bar-color;
+@volume-slider-color: @progress-slider-color;
+@volume-bg-color: rgba(0, 0, 0, 0);
+
+// Media queries breakpoints
+// Extra small screen / phone
+@screen-xs : 480px;
+@screen-xs-min : @screen-xs;
+
+// Small screen / tablet
+@screen-sm : 576px;
+@screen-sm-min : @screen-sm;
+
+// Medium screen / desktop
+@screen-md : 768px;
+@screen-md-min : @screen-md;
+
+// Large screen / wide desktop
+@screen-lg : 992px;
+@screen-lg-min : @screen-lg;
+
+// Extra large screen / full hd
+@screen-xl : 1200px;
+@screen-xl-min : @screen-xl;
+
+// Extra extra large screen / large descktop
+@screen-xxl : 1600px;
+@screen-xxl-min : @screen-xxl;
+
+// provide a maximum
+@screen-xs-max : (@screen-sm-min - 1px);
+@screen-sm-max : (@screen-md-min - 1px);
+@screen-md-max : (@screen-lg-min - 1px);
+@screen-lg-max : (@screen-xl-min - 1px);
+@screen-xl-max : (@screen-xxl-min - 1px);
+
+// Animation
+@ease-out : cubic-bezier(0.215, 0.61, 0.355, 1);
+@ease-in : cubic-bezier(0.55, 0.055, 0.675, 0.19);
+@ease-in-out : cubic-bezier(0.645, 0.045, 0.355, 1);
+@ease-out-back : cubic-bezier(0.12, 0.4, 0.29, 1.46);
+@ease-in-back : cubic-bezier(0.71, -0.46, 0.88, 0.6);
+@ease-in-out-back : cubic-bezier(0.71, -0.46, 0.29, 1.46);
+@ease-out-circ : cubic-bezier(0.08, 0.82, 0.17, 1);
+@ease-in-circ : cubic-bezier(0.6, 0.04, 0.98, 0.34);
+@ease-in-out-circ : cubic-bezier(0.78, 0.14, 0.15, 0.86);
+@ease-out-quint : cubic-bezier(0.23, 1, 0.32, 1);
+@ease-in-quint : cubic-bezier(0.755, 0.05, 0.855, 0.06);
+@ease-in-out-quint : cubic-bezier(0.86, 0, 0.07, 1);
