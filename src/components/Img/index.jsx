@@ -1,4 +1,5 @@
 import throttle from 'lodash/throttle';
+import scrollParent from 'utils/scrollParent';
 export default class Img extends React.Component {
     imgElementRef = React.createRef();
     visible = false;
@@ -8,12 +9,12 @@ export default class Img extends React.Component {
     componentDidMount() {
         this.imgElement = this.imgElementRef.current;
         if (this.props.lazyload) {
-            this.content = document.getElementById('page-content-inner');
+            this.content = scrollParent(this.imgElement) || document.getElementById('page-content-inner');
             this.addEvent();
         }
     }
-    shouldComponentUpdate() {
-        return !this.visible;
+    shouldComponentUpdate(nextProps) {
+        return !this.visible && this.props.src !== nextProps.src;
     }
     componentWillUnmount() {
         this.props.lazyload && this.removeEvent();

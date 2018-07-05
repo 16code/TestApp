@@ -44,7 +44,7 @@ export default class SongItem extends React.PureComponent {
         // with
         return (
             <article className={clsStr} key={data.id}>
-                <Thumb source={data.al.picUrl} size="60y60" playCtrl={playCtrl} />
+                <Thumb source={data.al.picUrl} size="60y60" playCtrl={playCtrl} lazyload />
                 <div className={styles['song-info']}>
                     <a className={styles['song-name']} href="?13131">
                         {data.name}

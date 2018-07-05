@@ -9,9 +9,32 @@ const menuData = getMenuData();
 
 const { Sider, Header, Content, Player } = Layout;
 export default class BasicLayout extends React.PureComponent {
+    getFlatMenuKeys(menus) {
+        let keys = {};
+        menus.forEach(item => {
+            if (item.children) {
+                keys = Object.assign(keys, this.getFlatMenuKeys(item.children));
+            }
+            keys[item.path] = {
+                name: item.name
+            };
+        });
+        return keys;
+    }
+    getPageTitle() {
+        const { location } = this.props;
+        const { pathname } = location;
+        const routerData = this.getFlatMenuKeys(menuData);
+        let title = 'React Music';
+        if (routerData[pathname] && routerData[pathname].name) {
+            title = `${routerData[pathname].name} - React Music`;
+        }
+        return title;
+    }
+
     render() {
         return (
-            <DocumentTitle title="Home">
+            <DocumentTitle title={this.getPageTitle()}>
                 <Layout data-layout="root">
                     <Sider>
                         <Menu data={menuData} />
