@@ -4,26 +4,39 @@ import InfiniteScroll from 'components/InfiniteScroll';
 import SongService from 'services/api/song.service';
 
 export default class MusicRecommend extends React.PureComponent {
-    state = {};
+    state = {
+        topSongs: []
+    };
+    pagination = { category: 'new', limit: 10, offset: 0 }
     componentDidMount() {
-        this.getTopSongs();
+        this.requestData();
     }
-    async getTopSongs() {
-        const result = await SongService.list({ limit: 12, offset: 1, id: 1, category: 'new' });
-        this.setState({ topSongs: result.data });
+    async requestData() {
+        this.setState({ isFetching: true });
+        const result = await SongService.list(this.pagination);
+        this.setState(prevState => ({
+            topSongs: prevState.topSongs.concat(result.data),
+            total: result.total,
+            isFetching: false
+        }));
     }
     renderSong = item => {
         return <SongList.Item data={item} showAlbum />;
     };
-    handleScrollEnd = pos => {
-        console.log(pos);
+    handleScrollEnd = () => {
+        console.log('loading');
+        const { isFetching, total, topSongs } = this.state;
+        if (isFetching || topSongs.length === total) return;
+        this.pagination.offset = ++this.pagination.offset;
+        this.setState({ isFetching: true });
+        this.requestData();
     };
     render() {
-        const { topSongs } = this.state;
+        const { topSongs, isFetching } = this.state;
         return (
             <div className="music-recommend">
                 <Box title="每日推荐">
-                    <InfiniteScroll scrollThreshold={100} onScrollEnd={this.handleScrollEnd}>
+                    <InfiniteScroll scrollThreshold={50} onScrollEnd={this.handleScrollEnd} isFetching={isFetching} >
                         <SongList dataSource={topSongs} renderItem={this.renderSong} rowKey="id" />
                     </InfiniteScroll>
                 </Box>

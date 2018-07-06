@@ -17,11 +17,11 @@ export default class HomeScenes extends React.PureComponent {
         this.setState({ playlist: result.playlists });
     }
     async getTopSongs() {
-        const result = await SongService.list({ limit: 12, offset: 2, id: 24, category: 'top' });
+        const result = await SongService.list({ limit: 12, offset: 0, id: 24, category: 'top' });
         this.setState({ topSongs: result.data });
     }
     async getNewSongs() {
-        const result = await SongService.list({ limit: 12, offset: 2, category: 'new' });
+        const result = await SongService.list({ limit: 12, offset: 0, category: 'new' });
         this.setState({ newSongs: result.data });
     }
     // async getArtist() {
@@ -66,9 +66,7 @@ export default class HomeScenes extends React.PureComponent {
                             </a>
                         }
                     >
-                        <SongList title="云音乐热歌榜" dataSource={topSongs} renderItem={this.renderSong} rowKey="id">
-                            topSongs
-                        </SongList>
+                        <SongList dataSource={topSongs} renderItem={this.renderSong} rowKey="id" />
                     </Box>
                     <Box
                         title="新曲推荐"
@@ -78,9 +76,7 @@ export default class HomeScenes extends React.PureComponent {
                             </a>
                         }
                     >
-                        <SongList title="云音乐热歌榜" dataSource={newSongs} renderItem={this.renderSong} rowKey="id">
-                            topSongs
-                        </SongList>
+                        <SongList dataSource={newSongs} renderItem={this.renderSong} rowKey="id" />
                     </Box>
                 </div>
             </div>

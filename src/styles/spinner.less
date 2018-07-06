@@ -52,8 +52,11 @@
     background-image: url('../asstes/loading.png');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 16px 16px;
-    animation: spin 0.4s linear 20;
+    background-size: .2rem .2rem;
+    animation: spin 0.4s linear 30;
+    width: .2rem;
+    height: .2rem;
+    display: inline-block;
 }
 @keyframes spin {
     from {
@@ -62,4 +65,10 @@
     to {
         transform: rotateZ(1turn);
     }
+}
+
+.list-loading {
+    line-height: 1;
+    text-align: center;
+    margin: .16rem auto 0;
 }

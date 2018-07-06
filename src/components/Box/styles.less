@@ -3,7 +3,6 @@
     position: relative;
     display: grid;
     grid-row-gap: @box-padding-base;
-    margin-bottom: @box-padding-base;
     &-header {
         display: flex;
         position: relative;
@@ -32,4 +31,7 @@
     &-body {
         position: relative;
     }
+}
+.box + .box {
+    margin-bottom: @box-padding-base;
 }
