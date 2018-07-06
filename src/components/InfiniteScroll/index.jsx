@@ -5,12 +5,10 @@ export default class InfiniteScroll extends React.Component {
     scrollContentRef = React.createRef();
     static defaultProps = {
         scrollThreshold: 0
-    }
+    };
     componentDidMount() {
         this.scroller = scrollParent(this.scrollContentRef.current);
-        if (this.scroller) {
-            this.bindScrollEvent();
-        };
+        if (this.scroller) this.bindScrollEvent();
     }
     componentWillUnmount() {
         this.removeScrollEvent();
@@ -18,7 +16,7 @@ export default class InfiniteScroll extends React.Component {
     bindScrollEvent = () => {
         this.throttled = throttle(this.onScroll, 200);
         this.scroller.addEventListener('scroll', this.throttled, { passive: true });
-    }
+    };
     removeScrollEvent = () => {
         this.scroller.removeEventListener('scroll', this.throttled, { passive: true });
     };
@@ -30,7 +28,7 @@ export default class InfiniteScroll extends React.Component {
         if (scrollOffset <= this.props.scrollThreshold) {
             this.props.onScrollEnd && this.props.onScrollEnd(scrollOffset);
         }
-    }
+    };
     render() {
         return <div ref={this.scrollContentRef}>{this.props.children}</div>;
     }
