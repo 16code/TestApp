@@ -2,19 +2,20 @@
 .box {
     position: relative;
     display: grid;
-    grid-row-gap: @box-padding-base;
+    grid-gap: 0.12rem;
     &-header {
-        display: flex;
         position: relative;
-        justify-content: space-between;
-        align-items: flex-end;
+        display: grid;
+        align-items: center;
+        grid-template-columns: 75% 1fr;
     }
     &-title {
         font-size: 0.18rem;
         color: fade(@text-color, 80%);
+        line-height: 1;
     }
     &-extra {
-        font-size: 12px;
+        justify-self: end;
         a {
             color: @text-color;
             display: inline-block;
@@ -31,7 +32,4 @@
     &-body {
         position: relative;
     }
-}
-.box + .box {
-    margin-bottom: @box-padding-base;
 }

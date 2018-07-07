@@ -18,7 +18,7 @@ export default class PlayList extends ListBase {
         const isHorizontalLayout = itemLayout === 'horizontal';
         const styleStr = isHorizontalLayout
             ? {
-                'grid-template-columns': `repeat(${len}, minmax(1.8rem, 1fr))`
+                'grid-template-columns': `repeat(${len}, minmax(1.4rem, 1fr))`
             }
             : { width: '100%' };
 

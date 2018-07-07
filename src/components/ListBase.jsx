@@ -22,7 +22,7 @@ export default class ListBase extends React.Component {
         return renderItem(item, index);
     };
     renderChildrenContent = () => {
-        const { dataSource, playSong, playingSongId, playerState } = this.props;
+        const { dataSource, playSong, playingSongId, playerState, loading } = this.props;
         let childrenContent;
         if (dataSource.length > 0) {
             const items = dataSource.map((item, index) => this.renderItem(item, index));
@@ -31,9 +31,12 @@ export default class ListBase extends React.Component {
             );
             childrenContent = childrenList;
         } else {
-            childrenContent = this.renderEmpty();
+            childrenContent = loading ? this.renderLoading() : this.renderEmpty();
         }
         return childrenContent;
+    };
+    renderLoading = () => {
+        return <div className={'ui-list-empty-text'}>loading</div>;
     };
     renderEmpty = () => {
         return <div className={'ui-list-empty-text'}>empty</div>;

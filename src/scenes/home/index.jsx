@@ -1,33 +1,20 @@
 import Box from 'components/Box';
 import PlayList from 'components/PlayLists';
 import SongList from 'components/SongLists';
-import PlaylistService from 'services/api/playlist.service';
-import SongService from 'services/api/song.service';
+import Icon from 'components/Icon';
 
 export default class HomeScenes extends React.PureComponent {
     state = {};
     componentDidMount() {
-        this.getPlaylist();
-        this.getTopSongs();
-        this.getNewSongs();
-        // this.getArtist();
+        this.getDashboardData();
     }
-    async getPlaylist() {
-        const result = await PlaylistService.list({ limit: 4, offset: 0 });
-        this.setState({ playlist: result.playlists });
+    async getDashboardData() {
+        this.setState({ isFetching: true });
+        const {
+            data: { latest, topboard, playlist }
+        } = await fetch('/dashboard').catch(() => this.setState({ isFetching: false }));
+        this.setState({ playlist: playlist, topSongs: topboard, newSongs: latest, isFetching: false });
     }
-    async getTopSongs() {
-        const result = await SongService.list({ limit: 12, offset: 0, id: 24, category: 'top' });
-        this.setState({ topSongs: result.data });
-    }
-    async getNewSongs() {
-        const result = await SongService.list({ limit: 12, offset: 0, category: 'new' });
-        this.setState({ newSongs: result.data });
-    }
-    // async getArtist() {
-    //     const result = await PlaylistService.artist({ limit: 3, offset: 0 });
-    //     this.setState({ artists: result.data });
-    // }
     renderPlaylist = item => {
         return <PlayList.Card data={item} />;
     };
@@ -35,14 +22,14 @@ export default class HomeScenes extends React.PureComponent {
         return <SongList.Item data={item} />;
     };
     render() {
-        const { playlist, topSongs, newSongs } = this.state;
+        const { playlist, topSongs, newSongs, isFetching } = this.state;
         return (
-            <div>
+            <div className="grid grid-app-home-layout">
                 <Box
                     title="推荐歌单"
                     extra={
                         <a href="#">
-                            <i className="iconfont icon-more" />
+                            <Icon type="more" />
                         </a>
                     }
                 >
@@ -50,35 +37,31 @@ export default class HomeScenes extends React.PureComponent {
                         title="推荐歌单"
                         itemLayout="horizontal"
                         dataSource={playlist}
+                        loading={isFetching}
                         renderItem={this.renderPlaylist}
                         rowKey="id"
-                    >
-                        131
-                    </PlayList>
+                    />
                 </Box>
-
-                <div className="grid grid-app-home-layout">
-                    <Box
-                        title="云音乐热歌榜"
-                        extra={
-                            <a href="#">
-                                <i className="iconfont icon-more" />
-                            </a>
-                        }
-                    >
-                        <SongList dataSource={topSongs} renderItem={this.renderSong} rowKey="id" />
-                    </Box>
-                    <Box
-                        title="新曲推荐"
-                        extra={
-                            <a href="#">
-                                <i className="iconfont icon-more" />
-                            </a>
-                        }
-                    >
-                        <SongList dataSource={newSongs} renderItem={this.renderSong} rowKey="id" />
-                    </Box>
-                </div>
+                <Box
+                    title="云音乐热歌榜"
+                    extra={
+                        <a href="#">
+                            <Icon type="more" />
+                        </a>
+                    }
+                >
+                    <SongList dataSource={topSongs} loading={isFetching} renderItem={this.renderSong} rowKey="id" />
+                </Box>
+                <Box
+                    title="新曲推荐"
+                    extra={
+                        <a href="#">
+                            <Icon type="more" />
+                        </a>
+                    }
+                >
+                    <SongList dataSource={newSongs} loading={isFetching} renderItem={this.renderSong} rowKey="id" />
+                </Box>
             </div>
         );
     }

@@ -1,5 +1,10 @@
+@import '~styles/variable.less';
 .ui-songlists {
     display: grid;
-    grid-gap: 0 16px;
+    grid-gap: 0 @box-padding-base;
     position: relative;
+    margin: -(@box-padding-base / 2);
+    > article {
+        padding: @box-padding-base / 2;
+    }
 }

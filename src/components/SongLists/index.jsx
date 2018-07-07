@@ -23,11 +23,12 @@ export default class SongList extends ListBase {
         dataSource: []
     };
     shouldComponentUpdate(nextProps) {
-        const { dataSource, playerState, playingSongId } = nextProps;
+        const { dataSource, playerState, playingSongId, loading } = nextProps;
         return (
             dataSource.length !== this.props.dataSource.length ||
             playerState !== this.props.playerState ||
-            playingSongId !== this.props.playingSongId
+            playingSongId !== this.props.playingSongId ||
+            loading !== this.props.loading
         );
     }
     render() {
