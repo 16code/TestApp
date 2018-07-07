@@ -1,6 +1,6 @@
 // import throttle from 'lodash/throttle';
 import scrollParent from 'utils/scrollParent';
-import { AjaxLoading } from 'components/Spinner';
+import { Spinner } from 'components/Spinner';
 
 export default class InfiniteScroll extends React.Component {
     scrollContentRef = React.createRef();
@@ -15,6 +15,10 @@ export default class InfiniteScroll extends React.Component {
     componentWillUnmount() {
         this.removeScrollEvent();
     }
+    componentDidUpdate(props) {
+        const { destroy } = props;
+        if (destroy || this.props.destroy) this.removeScrollEvent();
+    }
     bindScrollEvent = () => {
         // this.throttled = throttle(this.onScroll, 200);
         this.scroller.addEventListener('scroll', this.onScroll);
@@ -27,7 +31,6 @@ export default class InfiniteScroll extends React.Component {
             requestAnimationFrame(this.cb);
             this.ticking = true;
         }
-
     };
     cb = () => {
         const bottom = this.scroller.scrollHeight;
@@ -38,14 +41,14 @@ export default class InfiniteScroll extends React.Component {
             this.props.onScrollEnd && this.props.onScrollEnd(scrollOffset);
         }
     };
-    render() {
+    renderLoading() {
         return (
-            <div ref={this.scrollContentRef}>
-                {this.props.children}
-                <div className="list-loading" >
-                    <AjaxLoading visible={this.props.isFetching} />
-                </div>
+            <div className="list-loading">
+                <Spinner visible={this.props.loading} />
             </div>
         );
+    }
+    render() {
+        return <div ref={this.scrollContentRef}>{this.props.children}</div>;
     }
 }

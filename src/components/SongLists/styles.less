@@ -1,10 +1,19 @@
 @import '~styles/variable.less';
+@box-margin: -(@box-padding-base / 2);
 .ui-songlists {
     display: grid;
     grid-gap: 0 @box-padding-base;
     position: relative;
-    margin: -(@box-padding-base / 2);
+    margin: @box-margin @box-margin 0;
     > article {
         padding: @box-padding-base / 2;
+    }
+}
+:global {
+    .ui-list-empty-text,
+    .ui-list-loading {
+        padding: @box-padding-base @box-padding-base / 2;
+        display: grid;
+        justify-content: center;
     }
 }

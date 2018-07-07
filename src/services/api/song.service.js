@@ -5,7 +5,6 @@ class SongService {
         const cacheRespones = this.cache[category] || (await this.getData(category));
         const start = limit * offset;
         const end = limit * (offset + 1);
-        console.log(start, end);
         const res = {
             data: cacheRespones.data.slice(start, end),
             total: cacheRespones.data.length

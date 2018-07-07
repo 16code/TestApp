@@ -2,9 +2,9 @@ import Box from 'components/Box';
 import PlayList from 'components/PlayLists';
 import SongList from 'components/SongLists';
 import Icon from 'components/Icon';
-
+import { FullSpinner } from 'components/Spinner';
 export default class HomeScenes extends React.PureComponent {
-    state = {};
+    state = { isFetching: true };
     componentDidMount() {
         this.getDashboardData();
     }
@@ -23,6 +23,7 @@ export default class HomeScenes extends React.PureComponent {
     };
     render() {
         const { playlist, topSongs, newSongs, isFetching } = this.state;
+        if (isFetching) return <FullSpinner loading="run" />;
         return (
             <div className="grid grid-app-home-layout">
                 <Box

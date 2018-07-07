@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { Spinner } from 'components/Spinner';
+const { Fragment } = React;
 export default class ListBase extends React.Component {
     static propTypes = {
         dataSource: PropTypes.array,
@@ -31,12 +33,21 @@ export default class ListBase extends React.Component {
             );
             childrenContent = childrenList;
         } else {
-            childrenContent = loading ? this.renderLoading() : this.renderEmpty();
+            childrenContent = !loading && this.renderEmpty();
         }
-        return childrenContent;
+        return (
+            <Fragment>
+                {childrenContent}
+                {loading && this.renderLoading()}
+            </Fragment>
+        );
     };
     renderLoading = () => {
-        return <div className={'ui-list-empty-text'}>loading</div>;
+        return (
+            <div className={'ui-list-loading'}>
+                <Spinner playState="run" visible />
+            </div>
+        );
     };
     renderEmpty = () => {
         return <div className={'ui-list-empty-text'}>empty</div>;
