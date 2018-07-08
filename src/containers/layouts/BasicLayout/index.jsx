@@ -27,19 +27,21 @@ export default class BasicLayout extends React.PureComponent {
         const routerData = this.getFlatMenuKeys(menuData);
         let title = 'React Music';
         if (routerData[pathname] && routerData[pathname].name) {
-            title = `${routerData[pathname].name} - React Music`;
+            title = routerData[pathname].name;
         }
         return title;
     }
 
     render() {
         return (
-            <DocumentTitle title={this.getPageTitle()}>
+            <DocumentTitle title={`${this.getPageTitle()} - React Music`}>
                 <Layout data-layout="root">
                     <Sider>
                         <Menu data={menuData} />
                     </Sider>
-                    <Header>Header</Header>
+                    <Header>
+                        <h2 className="page-heading">{this.getPageTitle()}</h2>
+                    </Header>
                     <Content id="page-content-wrapper">
                         <div id="page-content-inner" className="page-content">
                             <Scenes {...this.props} />

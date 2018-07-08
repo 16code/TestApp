@@ -4,11 +4,11 @@ import InfiniteScroll from 'components/InfiniteScroll';
 import { ListLoading } from 'components/Spinner';
 import SongService from 'services/api/song.service';
 
-export default class MusicRecommend extends React.PureComponent {
+export default class MusicTop extends React.PureComponent {
     state = {
         topSongs: []
     };
-    pagination = { category: 'new', limit: 10, offset: 0 };
+    pagination = { category: 'top', id: 24, limit: 10, offset: 0 };
     componentDidMount() {
         this.requestData();
     }
@@ -21,8 +21,8 @@ export default class MusicRecommend extends React.PureComponent {
             isFetching: false
         }));
     }
-    renderSong = item => {
-        return <SongList.Item data={item} showAlbum />;
+    renderSong = (item, index) => {
+        return <SongList.Item data={item} index={index + 1} showAlbum showNumber />;
     };
     handleScrollEnd = () => {
         const { isFetching, total, topSongs } = this.state;

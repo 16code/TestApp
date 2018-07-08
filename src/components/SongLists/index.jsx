@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { actions as playerActions } from 'reducers/playerState';
 import ListBase from '../ListBase';
@@ -33,6 +34,7 @@ export default class SongList extends ListBase {
         );
     }
     render() {
-        return <section className={styles['ui-songlists']}>{this.renderChildrenContent()}</section>;
+        const clsStr = classNames(styles['ui-songlists'], this.props.className);
+        return <section className={clsStr}>{this.renderChildrenContent()}</section>;
     }
 }

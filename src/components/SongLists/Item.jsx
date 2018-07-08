@@ -12,7 +12,8 @@ import styles from './item.less';
 export default class SongItem extends React.PureComponent {
     displayName = 'SongItemPureComponent';
     static defaultProps = {
-        showAlbum: false
+        showAlbum: false,
+        showNumber: false
     };
     handlePlay = music => {
         this.props.playSong(music);
@@ -25,7 +26,7 @@ export default class SongItem extends React.PureComponent {
         return content;
     }
     render() {
-        const { data, playerState, playingSongId, showAlbum } = this.props;
+        const { data, playerState, playingSongId, showAlbum, className, showNumber, index } = this.props;
         const disabled = playerState === 'pending' && playingSongId === data.id;
         const playCtrl = (
             <PlayControl
@@ -38,12 +39,14 @@ export default class SongItem extends React.PureComponent {
                 size="small"
             />
         );
-        const clsStr = classNames(styles['song-item'], {
-            [styles['item-with-album']]: showAlbum
+        const clsStr = classNames(styles['song-item'], className, {
+            [styles['item-with-album']]: showAlbum,
+            [styles['item-with-number']]: showNumber
         });
         // with
         return (
             <article className={clsStr} key={data.id}>
+                {showNumber && <span className="number">{index}</span>}
                 <Thumb source={data.al.picUrl} size="60y60" playCtrl={playCtrl} lazyload />
                 <div className={styles['song-info']}>
                     <a className={styles['song-name']} href="?13131">
