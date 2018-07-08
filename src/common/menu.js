@@ -19,7 +19,7 @@ export const menuData = [
                 path: 'recommend'
             },
             {
-                name: '最新歌曲',
+                name: '推荐新音乐',
                 path: 'new'
             },
             {

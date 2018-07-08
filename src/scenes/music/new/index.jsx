@@ -1,146 +1,56 @@
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-import Singer from 'components/SingerLink';
-import { actions as playerActions } from 'reducers/playerState';
-import Icon from 'components/Icon';
-import Lyric from './lyric';
+import Box from 'components/Box';
+import SongList from 'components/SongLists';
+import InfiniteScroll from 'components/InfiniteScroll';
+import { ListLoading } from 'components/Spinner';
+import SongService from 'services/api/song.service';
 
-import styles from './styles.less';
-@connect(
-    ({ player }) => ({
-        mediaSourceLrc: player.mediaSourceLrc,
-        playingSongId: player.playingSongId,
-        playingSongData: player.playingSongData,
-        playListSongs: player.playListByMusic,
-        playerState: player.playerState
-    }),
-    {
-        fetchLrc: playerActions.fetchLrc
-    }
-)
-export default class MusicNew extends React.PureComponent {
-    static defaultProps = {
-        mediaSourceLrc: {}
+export default class MusicRecommend extends React.PureComponent {
+    state = {
+        topSongs: []
     };
-    state = { imgUrl: require('../../../asstes/default.jpg') };
-    lrcScrollBoxRef = React.createRef();
+    pagination = { category: 'new', limit: 10, offset: 0 };
     componentDidMount() {
-        const { playingSongId, mediaSourceLrc } = this.props;
-        this.lrc = new Lyric({
-            container: document.querySelector(`.${styles['lyrics-box']}`),
-            scrollBox: this.lrcScrollBoxRef.current,
-            lrcMaxVisibleLine: 10,
-            lrcLineHeight: 0.28
-        });
-        this.audio = document.querySelector('audio');
-        this.audio.addEventListener('ended', this.onEnd);
-        if ((playingSongId && !mediaSourceLrc) || (mediaSourceLrc && mediaSourceLrc.id !== playingSongId)) {
-            this.loadLrcData(playingSongId);
-        } else if (playingSongId && mediaSourceLrc.lrcData) {
-            this.lrc.setOption({ lrcData: Lyric.parseLyric(mediaSourceLrc.lrcData) });
-        }
-        this.loadCoverImg();
-        this.audio.addEventListener('timeupdate', this.onTimeUpdate);
+        this.requestData();
     }
-    componentDidUpdate(prevProps) {
-        const { mediaSourceLrc, playingSongId } = this.props;
-        if (playingSongId !== prevProps.playingSongId) {
-            this.loadLrcData(playingSongId);
-            this.loadCoverImg();
-        }
-        if ((mediaSourceLrc && mediaSourceLrc.id) !== (prevProps.mediaSourceLrc && prevProps.mediaSourceLrc.id)) {
-            this.lrc.setOption({ lrcData: Lyric.parseLyric(mediaSourceLrc.lrcData) });
-        }
+    async requestData() {
+        this.setState({ isFetching: true });
+        const result = await SongService.list(this.pagination);
+        this.setState(prevState => ({
+            topSongs: prevState.topSongs.concat(result.data),
+            total: result.total,
+            isFetching: false
+        }));
     }
-    componentWillUnmount() {
-        this.audio.removeEventListener('timeupdate', this.onTimeUpdate);
-        this.audio.removeEventListener('ended', this.onEnd);
-        this.lrc = null;
-    }
-    loadLrcData(id) {
-        this.props.fetchLrc(id);
-    }
-    onEnd = () => {
-        this.onTimeUpdate(0);
+    renderSong = item => {
+        return <SongList.Item data={item} showAlbum />;
     };
-    onTimeUpdate = time => {
-        const currentTime = time === 0 ? 0 : this.audio.currentTime;
-        this.lrc.update(currentTime);
-    };
-    loadCoverImg = () => {
-        const { picUrl } = this.songInfo;
-        if (!picUrl) return;
-        this.setState({ fetchCoverImg: true }, () => {
-            const img = new Image();
-            img.onload = () => {
-                this.setState({ imgUrl: img.src, fetchCoverImg: false });
-            };
-            img.src = `${picUrl}?param=300y300&quality=60`;
+    handleScrollEnd = () => {
+        const { isFetching, total, topSongs } = this.state;
+        if (isFetching) return;
+        if (topSongs.length === total) {
+            this.setState({ allDataLoaded: true, isFetching: false });
+            return;
+        }
+        this.setState({ isFetching: true }, () => {
+            this.pagination.offset = ++this.pagination.offset;
+            this.requestData();
         });
     };
-    get songInfo() {
-        const { playingSongId, playListSongs } = this.props;
-        if (playingSongId && playListSongs) {
-            const { name, ar, al } = this.props.playingSongData;
-            return {
-                name,
-                picUrl: al.picUrl,
-                al,
-                ar
-            };
-        }
-        return {};
-    }
     render() {
-        const classStr = classNames(styles.cover, {
-            [[styles['cover-loading']]]: this.state.fetchCoverImg
-        });
-        const { name, ar, al } = this.songInfo;
+        const { topSongs, isFetching, allDataLoaded } = this.state;
         return (
-            <div className={styles['music-details']}>
-                <div className={styles['music-meta']}>
-                    <h2>{name}</h2>
-                    <div className={styles.meta}>
-                        {ar && (
-                            <span className={styles.singer}>
-                                歌手: <Singer data={ar} />{' '}
-                            </span>
-                        )}
-                        {al && <span className={styles.album}>专辑: {al.name} </span>}
-                    </div>
-                </div>
-                <div className={styles['music-lyrics']}>
-                    <div className={styles['album-box']} data-state={this.props.playerState}>
-                        <div className={classStr}>
-                            <span className={styles.tonearm} />
-                            <figure className={styles.album}>
-                                {this.state.imgUrl && <img src={this.state.imgUrl} />}
-                            </figure>
-                            <figure className={styles.cd}>
-                                {this.state.imgUrl && (
-                                    <img src={this.state.imgUrl} className={styles['vinyl-discCover']} />
-                                )}
-                            </figure>
-                        </div>
-                        <div className={styles.actions}>
-                            <button className={styles.btn} role="button">
-                                <Icon className={styles.icon} type="like" />
-                            </button>
-                            <button className={styles.btn} role="button">
-                                <Icon className={styles.icon} type="download" />
-                            </button>
-                            <button className={styles.btn} role="button">
-                                <Icon className={styles.icon} type="share" />
-                            </button>
-                            <button className={styles.btn} role="button">
-                                <Icon className={styles.icon} type="folder-add" />
-                            </button>
-                        </div>
-                    </div>
-                    <div className={styles['lyrics-box']}>
-                        <ul ref={this.lrcScrollBoxRef} className={styles.scrollbox} />
-                    </div>
-                </div>
+            <div className="music-recommend">
+                <Box title="推荐新音乐">
+                    <InfiniteScroll
+                        scrollThreshold={50}
+                        onScrollEnd={this.handleScrollEnd}
+                        loading={isFetching}
+                        destroy={allDataLoaded}
+                    >
+                        <SongList dataSource={topSongs} loading={isFetching} renderItem={this.renderSong} rowKey="id" />
+                    </InfiniteScroll>
+                    {!allDataLoaded && <ListLoading loading={isFetching} />}
+                </Box>
             </div>
         );
     }

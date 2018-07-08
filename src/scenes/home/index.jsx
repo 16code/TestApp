@@ -23,7 +23,7 @@ export default class HomeScenes extends React.PureComponent {
     };
     render() {
         const { playlist, topSongs, newSongs, isFetching } = this.state;
-        if (isFetching) return <FullSpinner loading="run" />;
+        if (isFetching) return <FullSpinner visible />;
         return (
             <div className="grid grid-app-home-layout">
                 <Box

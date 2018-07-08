@@ -25,10 +25,16 @@ const style = {
     height: '18px',
     margin: 'auto'
 };
-export const FullSpinner = ({ loading = 'paused' }) => (
+export const FullSpinner = ({ visible }) => (
     <div style={style}>
-        <Spinner playState={loading} />
+        <Spinner playState={'runing'} visible={visible} />
     </div>
 );
 export const AjaxLoading = ({ visible = false, className }) =>
     visible && <div className={`ajax-loading ${className}`} />;
+
+export const ListLoading = ({ loading }) => (
+    <div className={'ui-list-loading'}>
+        <Spinner playState="run" visible={loading} />
+    </div>
+);
