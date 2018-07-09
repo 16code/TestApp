@@ -5,7 +5,6 @@
     "main": "index.js",
     "scripts": {
         "start": "cross-env BABEL_ENV=development webpack-dev-server --inline --hot --env.mock",
-        "build:css": "webpack --config webpack.css.js -p",
         "build": "cross-env BABEL_ENV=production webpack --progress --colors --display minimal --env.prod",
         "lint": "node_modules/.bin/eslint --cache --cache-location '.eslintcache/' --config .eslintrc --quiet './src/**/*.js' './src/**/*.jsx'"
     },
@@ -53,6 +52,7 @@
         "eslint-plugin-import": "^2.11.0",
         "eslint-plugin-prettier": "^2.6.0",
         "eslint-plugin-react": "^7.9.0",
+        "express-http-proxy": "^1.2.0",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
         "fetch-intercept": "^2.2.3",
         "file-loader": "^1.1.11",
@@ -60,7 +60,7 @@
         "less": "^3.0.2",
         "less-loader": "^4.1.0",
         "path": "^0.12.7",
-        "postcss-loader": "^2.1.4",
+        "postcss-loader": "^2.1.5",
         "pre-commit": "^1.2.2",
         "prettier-eslint": "^8.8.1",
         "react-hot-loader": "^4.1.2",
