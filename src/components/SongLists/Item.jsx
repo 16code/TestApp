@@ -13,7 +13,8 @@ export default class SongItem extends React.PureComponent {
     displayName = 'SongItemPureComponent';
     static defaultProps = {
         showAlbum: false,
-        showNumber: false
+        showNumber: false,
+        albumSize: '60y60'
     };
     handlePlay = music => {
         this.props.playSong(music);
@@ -26,7 +27,7 @@ export default class SongItem extends React.PureComponent {
         return content;
     }
     render() {
-        const { data, playerState, playingSongId, showAlbum, className, showNumber, index } = this.props;
+        const { data, playerState, playingSongId, showAlbum, className, showNumber, index, albumSize } = this.props;
         const disabled = playerState === 'pending' && playingSongId === data.id;
         const playCtrl = (
             <PlayControl
@@ -47,7 +48,7 @@ export default class SongItem extends React.PureComponent {
         return (
             <article className={clsStr} key={data.id}>
                 {showNumber && <span className="number">{index}</span>}
-                <Thumb source={data.al.picUrl} size="60y60" playCtrl={playCtrl} lazyload />
+                <Thumb source={data.al.picUrl} size={albumSize} playCtrl={playCtrl} lazyload />
                 <div className={styles['song-info']}>
                     <a className={styles['song-name']} href="?13131">
                         {data.name}

@@ -5,6 +5,7 @@ import { Spinner } from 'components/Spinner';
 export default class InfiniteScroll extends React.Component {
     scrollContentRef = React.createRef();
     ticking = false;
+    eventBinded = false;
     static defaultProps = {
         scrollThreshold: 0
     };
@@ -17,14 +18,20 @@ export default class InfiniteScroll extends React.Component {
     }
     componentDidUpdate(props) {
         const { destroy } = props;
-        if (destroy || this.props.destroy) this.removeScrollEvent();
+        if (destroy || this.props.destroy) {
+            this.removeScrollEvent();
+        } else {
+            if (!this.eventBinded) this.bindScrollEvent();
+        }
     }
     bindScrollEvent = () => {
         // this.throttled = throttle(this.onScroll, 200);
         this.scroller.addEventListener('scroll', this.onScroll);
+        this.eventBinded = true;
     };
     removeScrollEvent = () => {
         this.scroller.removeEventListener('scroll', this.onScroll);
+        this.eventBinded = false;
     };
     onScroll = () => {
         if (!this.ticking) {

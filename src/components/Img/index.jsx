@@ -9,7 +9,7 @@ export default class Img extends React.Component {
     componentDidMount() {
         this.imgElement = this.imgElementRef.current;
         if (this.props.lazyload) {
-            this.content = scrollParent(this.imgElement) || document.getElementById('page-content-inner');
+            this.content = scrollParent(this.imgElement);
             this.addEvent();
         }
     }

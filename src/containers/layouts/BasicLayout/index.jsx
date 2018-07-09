@@ -43,9 +43,7 @@ export default class BasicLayout extends React.PureComponent {
                         <h2 className="page-heading">{this.getPageTitle()}</h2>
                     </Header>
                     <Content id="page-content-wrapper">
-                        <div id="page-content-inner" className="page-content">
-                            <Scenes {...this.props} />
-                        </div>
+                        <Scenes {...this.props} />
                     </Content>
                     <Player>
                         <AudioPlayer />
