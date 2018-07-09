@@ -13,7 +13,7 @@ const srcPath = path.join(__dirname, './src');
 const stylePath = path.join(__dirname, './src/styles');
 const distPath = path.join(__dirname, './dist');
 const cssLoaderConfig = function(options) {
-    const { isDev, useCssModule } = options;
+    const { useCssModule } = options;
     return {
         fallback: 'style-loader',
         use: [
@@ -28,21 +28,15 @@ const cssLoaderConfig = function(options) {
                 options: {
                     importLoaders: 2,
                     modules: useCssModule,
-                    localIdentName: isDev ? '[local]--[hash:base64:4]' : '[name]__[local]--[hash:base64:8]'
+                    localIdentName: '[local]--[hash:base64:4]'
                 }
             },
             {
                 loader: 'postcss-loader',
                 options: {
-                    plugins: () => [
-                        autoprefixer(
-                            isDev
-                                ? false
-                                : {
-                                    browsers: ['last 3 version']
-                                }
-                        )
-                    ]
+                    config: {
+                        path: 'postcss.config.js'
+                    }
                 }
             },
             {
@@ -232,17 +226,13 @@ function webpackConfig(env) {
                 {
                     test: /\.less$/,
                     include: stylePath,
-                    use: isMock
-                        ? ['style-loader', ...cssLoaderConfig({ isDev: env.mock, useCssModule: false }).use]
-                        : ExtractTextPlugin.extract(cssLoaderConfig({ isDev: env.mock, useCssModule: false })),
+                    use: ExtractTextPlugin.extract(cssLoaderConfig({ useCssModule: false })),
                     exclude: /(node_modules)/
                 },
                 {
                     test: /\.less$/,
                     include: /(src\/scenes|src\/components)/,
-                    use: isMock
-                        ? ['style-loader', ...cssLoaderConfig({ isDev: env.mock, useCssModule: true }).use]
-                        : ExtractTextPlugin.extract(cssLoaderConfig({ isDev: env.mock, useCssModule: true })),
+                    use: ExtractTextPlugin.extract(cssLoaderConfig({ useCssModule: true })),
                     exclude: /(node_modules)/
                 },
                 {
