@@ -1,6 +1,6 @@
 const delay = require('utils/index').delay;
 const asyncComponent = getComponent => {
-    return class AsyncComponent extends React.Component {
+    return class extends React.Component {
         displayName = 'AsyncComponent';
         state = { Component: null };
         firstRender = true;
@@ -36,17 +36,8 @@ const asyncComponent = getComponent => {
             this.firstRender = true;
             if (this.componentRef) this.componentRef.setState = () => {};
         }
-        getAnimatedDomNode() {
-            let element;
-            const ref = this.componentRef.current;
-            const elementRef = ReactDOM.findDOMNode(ref); // eslint-disable-line
-            if (ref && elementRef) {
-                element = elementRef.querySelector('.page-content');
-            }
-            return element;
-        }
         async applyRouterTransition() {
-            const element = this.getAnimatedDomNode();
+            const element = document.querySelector('.page-content');
             if (element) {
                 element.setAttribute('animated', 'page-enter');
                 await delay(1200);

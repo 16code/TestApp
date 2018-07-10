@@ -3,14 +3,18 @@ import Icon from 'components/Icon';
 const clsStr = (str = '') => `color color${str.toLowerCase().replace(/\//g, '-')}`;
 
 const renderItem = (items = []) =>
-    items.map(item => (
-        <li className="menu-item" key={item.path}>
-            <NavLink activeClassName="menu-item-selected" to={item.path}>
-                {item.icon ? <Icon type={item.icon} /> : <span className={clsStr(item.path)} />}
-                <span className="item-name">{item.name}</span>
-            </NavLink>
-        </li>
-    ));
+    items.map(item => {
+        return (
+            !item.hidden && (
+                <li className="menu-item" key={item.path}>
+                    <NavLink activeClassName="menu-item-selected" to={item.path}>
+                        {item.icon ? <Icon type={item.icon} /> : <span className={clsStr(item.path)} />}
+                        <span className="item-name">{item.name}</span>
+                    </NavLink>
+                </li>
+            )
+        );
+    });
 
 const renderGroup = item => {
     if (item.children) {

@@ -53,7 +53,7 @@ export default class MusicTop extends React.Component {
                     {!isFetching && (
                         <SongList dataSource={topSongs} loading={isFetching} renderItem={this.renderSong} rowKey="id" />
                     )}
-                    <FullSpinner visible={isFetching} />
+                    {isFetching && <FullSpinner visible={isFetching} />}
                 </Box>
             </DocumentTitle>
         );

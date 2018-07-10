@@ -13,15 +13,15 @@ export default function Thumb({ source, size = '54y54', className, metaExtra, pl
     const boxSizeStyle = { width: px2rem(w), height: px2rem(h) };
     return (
         <figure className={classString} style={boxSizeStyle} {...rest}>
-            <Img src={`${source}?param=${size2x}`} className={styles['ui-thumb-img']} lazyload={lazyload || true} />
+            <Img src={`${source}?param=${size2x}`} className={styles['ui-thumb-img']} lazyload={lazyload} />
             {metaExtra && metaExtraContent(metaExtra)}
             {playCtrl && playCtrl}
         </figure>
     );
 }
-const getBodyFontSize = (function () {
+const getBodyFontSize = (function() {
     let bodyFontSize = null;
-    return function () {
+    return function() {
         if (bodyFontSize) return bodyFontSize;
         const docEl = document.documentElement;
         const clientWidth = docEl.clientWidth;

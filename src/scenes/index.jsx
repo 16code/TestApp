@@ -1,16 +1,16 @@
-import { Route, Switch } from 'react-router-dom';
-const DashboardScene = asyncComponent(() => import(/* webpackChunkName: "dashboard" */ './home'));
-const music = asyncComponent(() => import(/* webpackChunkName: "dashboard" */ './music'));
-
-const NotFound = props => <div>404 {JSON.stringify(props.location, null, 2)}</div>;
+import { Route, Switch, Redirect } from 'react-router-dom';
+import NotFound from 'components/NotFound';
+const DashboardScene = asyncComponent(() => import(/* webpackChunkName: "dashboard" */ './dashboard'));
+const musicScene = asyncComponent(() => import(/* webpackChunkName: "dashboard" */ './music'));
 
 export default class AppScenes extends React.PureComponent {
     render() {
         return (
             <Switch>
                 <Route path="/dashboard" component={DashboardScene} exact />
-                <Route path="/music" component={music} />
-                <Route component={NotFound} />
+                <Route path="/music" component={musicScene} />
+                <Route path="/404" component={NotFound} />
+                <Route path="*" render={() => <Redirect to="/404" />} />
             </Switch>
         );
     }

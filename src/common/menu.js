@@ -7,6 +7,11 @@ export const menuData = [
                 name: 'Dashboard',
                 path: 'dashboard',
                 icon: 'dashborad'
+            },
+            {
+                name: 'NotFound',
+                path: '404',
+                hidden: true
             }
         ]
     },

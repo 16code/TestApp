@@ -39,7 +39,7 @@ export default class Forms extends React.PureComponent {
         const { match } = this.props;
         return (
             <SideLayout aside={this.renderCategories()}>
-                <Route path={`${match.path}/:id([0-9]{0,2})`} component={Component} />
+                <Route path={`${match.url}/:id([0-9]{0,2})`} component={Component} />
                 <Route exact path={match.url} render={() => <Redirect to={`${match.url}/0`} />} />
             </SideLayout>
         );

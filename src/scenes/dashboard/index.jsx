@@ -5,7 +5,7 @@ import Icon from 'components/Icon';
 import { FullSpinner } from 'components/Spinner';
 import PrimaryLayout from 'layouts/PrimaryLayout';
 
-export default class HomeScenes extends React.PureComponent {
+export default class Dashboard extends React.PureComponent {
     state = { isFetching: true };
     componentDidMount() {
         this.getDashboardData();
@@ -21,7 +21,7 @@ export default class HomeScenes extends React.PureComponent {
         return <PlayList.Card data={item} />;
     };
     renderSong = item => {
-        return <SongList.Item data={item} />;
+        return <SongList.Item albumSize="52y52" data={item} />;
     };
     render() {
         const { playlist, topSongs, newSongs, isFetching } = this.state;
