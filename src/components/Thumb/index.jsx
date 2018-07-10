@@ -4,8 +4,10 @@ import styles from './styles.less';
 
 const metaExtraContent = metaExtra => <figcaption className={styles['ui-thumb-meta']}>{metaExtra}</figcaption>;
 
-export default function Thumb({ source, size = '54y54', className, metaExtra, playCtrl, lazyload, ...rest }) {
-    const classString = classNames(styles['ui-thumb'], className);
+export default function Thumb({ source, size = '54y54', className, metaExtra, playCtrl, lazyload, circled, ...rest }) {
+    const classString = classNames(styles['ui-thumb'], className, {
+        [styles.circled]: circled
+    });
     let [w, h] = size.split('y');
     w = +w;
     h = +h;

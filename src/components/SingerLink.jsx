@@ -7,3 +7,11 @@ export default function SingerLink({ data = [], className }) {
         </Link>
     );
 }
+
+export function SingerLinkCard({ children, data = {}, className }) {
+    return (
+        <Link className={classNames(className)} key={data.id} to={`/${data.id}`}>
+            {children}
+        </Link>
+    );
+}

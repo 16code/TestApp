@@ -1,6 +1,8 @@
+import { safaJsonParse } from 'utils/index.js';
 import Box from 'components/Box';
 import PlayList from 'components/PlayLists';
 import SongList from 'components/SongLists';
+import ArtistCard from 'components/Artist/ArtistCard';
 import Icon from 'components/Icon';
 import { FullSpinner } from 'components/Spinner';
 import PrimaryLayout from 'layouts/PrimaryLayout';
@@ -9,13 +11,23 @@ export default class Dashboard extends React.PureComponent {
     state = { isFetching: true };
     componentDidMount() {
         this.getDashboardData();
+        const {
+            data: { latest, topboard, playlist, artists }
+        } = safaJsonParse(window.sessionStorage.getItem('Dashboard_DATA'));
+        this.setState({ playlist: playlist, topSongs: topboard, newSongs: latest, artists, isFetching: false });
     }
     async getDashboardData() {
         this.setState({ isFetching: true });
         const {
-            data: { latest, topboard, playlist }
+            data: { latest, topboard, playlist, artists }
         } = await fetch('/dashboard').catch(() => this.setState({ isFetching: false }));
-        this.setState({ playlist: playlist, topSongs: topboard, newSongs: latest, isFetching: false });
+        window.sessionStorage.setItem(
+            'Dashboard_DATA',
+            JSON.stringify({
+                data: { latest, topboard, playlist, artists }
+            })
+        );
+        this.setState({ playlist: playlist, topSongs: topboard, newSongs: latest, artists, isFetching: false });
     }
     renderPlaylist = item => {
         return <PlayList.Card data={item} />;
@@ -24,7 +36,7 @@ export default class Dashboard extends React.PureComponent {
         return <SongList.Item albumSize="52y52" data={item} />;
     };
     render() {
-        const { playlist, topSongs, newSongs, isFetching } = this.state;
+        const { playlist, topSongs, newSongs, artists, isFetching } = this.state;
         if (isFetching) return <FullSpinner visible />;
         return (
             <PrimaryLayout>
@@ -65,6 +77,16 @@ export default class Dashboard extends React.PureComponent {
                         }
                     >
                         <SongList dataSource={newSongs} loading={isFetching} renderItem={this.renderSong} rowKey="id" />
+                    </Box>
+                    <Box
+                        title="推荐歌手"
+                        extra={
+                            <a href="#">
+                                <Icon type="more" />
+                            </a>
+                        }
+                    >
+                        <ArtistCard dataSource={artists} />
                     </Box>
                 </div>
             </PrimaryLayout>

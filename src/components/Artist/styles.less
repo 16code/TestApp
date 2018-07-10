@@ -1,0 +1,26 @@
+@import '~styles/variable';
+.artist-cards {
+    display: grid;
+    user-select: none;
+    grid-gap: 0.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(0.5rem, 1fr));
+    .artist-item {
+        max-width: 100%;
+        justify-self: center;
+        text-align: center;
+    }
+    .artist {
+        font-size: 0.12rem;
+        display: block;
+        color: @text-color-secondary;
+        &:hover {
+            color: @color-sky;
+            img {
+                transform: scale(1.08) translateZ(0);
+            }
+        }
+        span {
+            line-height: 0.18rem;
+        }
+    }
+}
