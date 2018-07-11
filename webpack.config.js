@@ -226,13 +226,17 @@ function webpackConfig(env) {
                 {
                     test: /\.less$/,
                     include: stylePath,
-                    use: ExtractTextPlugin.extract(cssLoaderConfig({ useCssModule: false })),
+                    use: isMock
+                        ? ['style-loader', ...cssLoaderConfig({ useCssModule: false }).use]
+                        : ExtractTextPlugin.extract(cssLoaderConfig({ useCssModule: false })),
                     exclude: /(node_modules)/
                 },
                 {
                     test: /\.less$/,
                     include: /(src\/scenes|src\/components)/,
-                    use: ExtractTextPlugin.extract(cssLoaderConfig({ useCssModule: true })),
+                    use: isMock
+                        ? ['style-loader', ...cssLoaderConfig({ useCssModule: true }).use]
+                        : ExtractTextPlugin.extract(cssLoaderConfig({ useCssModule: true })),
                     exclude: /(node_modules)/
                 },
                 {

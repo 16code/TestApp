@@ -157,9 +157,9 @@
             z-index: 3;
         }
         > img {
-            mask: url('../../asstes/mask.png');
-            mask-repeat: no-repeat;
-            mask-position: right center;
+            -webkit-mask: url('../../asstes/mask.png') no-repeat right center;
+            mask: url('../../asstes/mask.png') no-repeat right center;
+            -webkit-mask-size: contain;
             mask-size: contain;
             border-radius: 6px;
             position: relative;

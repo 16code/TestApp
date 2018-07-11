@@ -10,23 +10,19 @@ import PrimaryLayout from 'layouts/PrimaryLayout';
 export default class Dashboard extends React.PureComponent {
     state = { isFetching: true };
     componentDidMount() {
-        this.getDashboardData();
-        const {
-            data: { latest, topboard, playlist, artists }
-        } = safaJsonParse(window.sessionStorage.getItem('Dashboard_DATA'));
-        this.setState({ playlist: playlist, topSongs: topboard, newSongs: latest, artists, isFetching: false });
+        const cache = safaJsonParse(window.sessionStorage.getItem('Dashboard_DATA'));
+        if (cache) {
+            const { latest, topboard, playlist, artists } = cache.data;
+            this.setState({ playlist: playlist, topSongs: topboard, newSongs: latest, artists, isFetching: false });
+        } else {
+            this.getDashboardData();
+        }
     }
     async getDashboardData() {
         this.setState({ isFetching: true });
-        const {
-            data: { latest, topboard, playlist, artists }
-        } = await fetch('/dashboard').catch(() => this.setState({ isFetching: false }));
-        window.sessionStorage.setItem(
-            'Dashboard_DATA',
-            JSON.stringify({
-                data: { latest, topboard, playlist, artists }
-            })
-        );
+        const { data } = await fetch('/dashboard').catch(() => this.setState({ isFetching: false }));
+        const { latest, topboard, playlist, artists } = data;
+        window.sessionStorage.setItem('Dashboard_DATA', JSON.stringify({ data }));
         this.setState({ playlist: playlist, topSongs: topboard, newSongs: latest, artists, isFetching: false });
     }
     renderPlaylist = item => {
@@ -79,7 +75,7 @@ export default class Dashboard extends React.PureComponent {
                         <SongList dataSource={newSongs} loading={isFetching} renderItem={this.renderSong} rowKey="id" />
                     </Box>
                     <Box
-                        title="推荐歌手"
+                        title="热门歌手"
                         extra={
                             <a href="#">
                                 <Icon type="more" />
