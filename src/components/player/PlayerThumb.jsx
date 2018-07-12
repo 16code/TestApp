@@ -1,6 +1,5 @@
 import { delay } from 'utils/index.js';
 import Singer from 'components/SingerLink';
-
 import styles from './thumb.less';
 
 const rAF = window.requestAnimationFrame;
@@ -18,21 +17,25 @@ let prevImg = 1;
 export default ({ data, onClick, lyricModalVisible }) => {
     const { album = {}, name, artist } = data;
     const div = document.getElementsByClassName('container-wrapper')[0];
-    if (album.blurUrl && prevImg && prevImg !== album.blurUrl) {
-        prevImg = album.blurUrl;
-        const pic = album.blurUrl;
-        div.classList.remove('bg-loaded');
-        let img = new Image();
-        img.onload = () => {
-            const cssText = `.container-wrapper::before {background-image:url(${img.src});}`;
-            img = null;
-            rAF(async () => {
-                await delay(500);
-                setStyle(cssText);
-                div.classList.add('bg-loaded');
-            });
-        };
-        img.src = pic;
+    if (album.blurUrl) {
+        if (prevImg !== album.blurUrl) {
+            prevImg = album.blurUrl;
+            const pic = album.blurUrl;
+            div.classList.remove('bg-loaded');
+            let img = new Image();
+            img.onload = () => {
+                const cssText = `.container-wrapper::before {background-image:url(${img.src});}`;
+                img = null;
+                rAF(async () => {
+                    await delay(500);
+                    setStyle(cssText);
+                    div.classList.add('bg-loaded');
+                });
+            };
+            img.src = pic;
+        }
+    } else {
+        setStyle('.container-wrapper::before {background-image: unset;}');
     }
     const iconCls = lyricModalVisible ? 'icon-suoxiao' : 'icon-bianda';
     return (

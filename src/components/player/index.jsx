@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { formatTime, bindEvents, removeEvents } from 'utils';
 import { actions as playerActions } from 'reducers/playerState';
+import { actions as lyricBoxActions } from 'reducers/lyricBox';
 import PlayControl from 'components/PlayControl';
 import RangeSlider from 'components/RangeSlider';
 import VolumeControl from './Volume';
@@ -11,7 +12,7 @@ import PlayerThumb from './PlayerThumb';
 import styles from './styles.less';
 
 @connect(
-    ({ player }) => ({
+    ({ player, lyricBox }) => ({
         volume: player.volume,
         canPlaying: player.canPlaying,
         playerState: player.playerState,
@@ -19,7 +20,8 @@ import styles from './styles.less';
         playingSongData: player.playingSongData,
         listRepeatState: player.listRepeatState,
         playListSongs: player.playListByMusic,
-        songFetching: player.songFetching
+        songFetching: player.songFetching,
+        lyricBoxVisible: lyricBox.visible
     }),
     {
         changePendingToPlaying: playerActions.changePendingToPlaying,
@@ -28,7 +30,8 @@ import styles from './styles.less';
         playNextOrPrevSong: playerActions.playNextOrPrevSong,
         playerStop: playerActions.playerStop,
         changeVolume: playerActions.changeVolume,
-        changeRepeatMode: playerActions.changeRepeatMode
+        changeRepeatMode: playerActions.changeRepeatMode,
+        toggleLrcBoxVisible: lyricBoxActions.toggleVisible
     }
 )
 export class AudioPlayer extends React.PureComponent {
@@ -41,10 +44,7 @@ export class AudioPlayer extends React.PureComponent {
             preload: 'auto'
         }
     };
-    state = {
-        playListVisible: false,
-        lyricModalVisible: false
-    };
+    state = { playListVisible: false };
     cachedRepaatModeIcons = {};
     events = () => {
         return {
@@ -191,16 +191,16 @@ export class AudioPlayer extends React.PureComponent {
         return cached ? cached : this.createRepeatModeClass(mode);
     };
     handleToggleLrcBox = () => {
-        this.setState(p => ({ lyricModalVisible: !p.lyricModalVisible }));
+        this.props.toggleLrcBoxVisible();
     };
     get songInfo() {
-        const { playingSongData } = this.props;
+        const { playingSongData, lyricBoxVisible } = this.props;
         return (
             playingSongData &&
             playingSongData.id && (
                 <PlayerThumb
                     onClick={this.handleToggleLrcBox}
-                    lyricModalVisible={this.state.lyricModalVisible}
+                    lyricModalVisible={lyricBoxVisible}
                     key="playerThumb"
                     data={playingSongData}
                 />
@@ -216,7 +216,8 @@ export class AudioPlayer extends React.PureComponent {
             listRepeatState,
             playListSongs,
             playingSongData,
-            songFetching
+            songFetching,
+            lyricBoxVisible
         } = this.props;
         const { media: mediaSourceUrl } = playingSongData || {};
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatState);
@@ -301,12 +302,12 @@ export class AudioPlayer extends React.PureComponent {
                     dataSource={playListSongs}
                 />
                 <LyricModal
-                    onClose={this.handleToggleLrcBox}
-                    visible={this.state.lyricModalVisible}
+                    visible={lyricBoxVisible}
                     isFetching={songFetching}
                     data={playingSongData}
                     playerState={playerState}
                     playingSongId={playingSongId}
+                    onClose={this.handleToggleLrcBox}
                 />
             </div>,
             this.songInfo

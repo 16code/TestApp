@@ -6,7 +6,7 @@ import { AjaxLoading } from 'components/Spinner';
 import LyricHelper from './lyric';
 import styles from './styles.less';
 
-export default class MusicNew extends React.PureComponent {
+export default class Lyric extends React.PureComponent {
     state = { imgUrl: require('../../asstes/default.jpg') };
     lrcScrollBoxRef = React.createRef();
     static defaultProps = {
@@ -21,20 +21,19 @@ export default class MusicNew extends React.PureComponent {
             lrcLineHeight: 0.28
         });
         this.audio = document.querySelector('audio');
-        this.effectBox = document.getElementById('page-content-inner');
+        this.larModal = document.getElementsByClassName('lyric-modal')[0];
         if (visible && data) {
             this.addEvents();
             this.loadCoverImg();
             this.lrc.setOption({ lrcData: LyricHelper.parseLyric(data.lyric) });
+            this.hideSibling(this.larModal, visible);
         }
     }
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         const { data, visible } = this.props;
-        this.effectBox.style.cssText = `; opacity: ${visible ? 0 : ''}; overflow: ${visible ? 'hidden' : ''}`;
-        if (!visible || !data) {
-            return this.removeEvents();
+        if (prevProps.visible !== visible) {
+            this.hideSibling(this.larModal, visible);
         }
-        this.addEvents();
         const currentLrcId = this.lrc.getCurrentLrcId();
         if (!currentLrcId || currentLrcId !== data.id) {
             this.loadCoverImg();
@@ -47,7 +46,15 @@ export default class MusicNew extends React.PureComponent {
     componentWillUnmount() {
         this.removeEvents();
         this.lrc = null;
-        this.effectBox = null;
+    }
+    hideSibling(larModal, visible) {
+        if (larModal && larModal.parentNode && larModal.parentNode.id === 'page-content-wrapper') {
+            [].forEach.call(larModal.parentNode.childNodes, item => {
+                if (!item.classList.contains('lyric-modal')) {
+                    item.style.cssText = `; opacity: ${visible ? 0 : ''}; overflow: ${visible ? 'hidden' : ''}`;
+                }
+            });
+        }
     }
     addEvents() {
         this.audio.addEventListener('ended', this.onEnd);

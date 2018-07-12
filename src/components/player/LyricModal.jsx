@@ -1,12 +1,10 @@
 import Modal from 'components/Modal';
 import Lyric from 'components/Lyric';
-import { withRouter } from 'react-router-dom';
 
-class LyricModal extends React.PureComponent {
+export default class LyricModal extends React.Component {
     state = { isFirstRender: true };
     componentDidMount() {
         this.modalContainer = document.getElementById('page-content-wrapper');
-        if (this.props.visible) this.bindEvent();
         if (this.modalContainer) {
             this.setState({ container: this.modalContainer });
         }
@@ -19,23 +17,9 @@ class LyricModal extends React.PureComponent {
         }
         return null;
     }
-    componentWillUnmount() {
-        this.removeEvent();
-    }
-    componentDidUpdate() {
-        if (this.props.visible) this.bindEvent();
-    }
-    bindEvent() {
-        const { history, onClose } = this.props;
-        this.historyListen = history.listen(() => {
-            if (this.props.visible) {
-                onClose && onClose();
-                this.removeEvent();
-            }
-        });
-    }
-    removeEvent() {
-        this.historyListen && this.historyListen();
+    shouldComponentUpdate(nextProps) {
+        const { playingSongId, visible } = this.props;
+        return nextProps.playingSongId !== playingSongId || nextProps.visible !== visible;
     }
     render() {
         const { container, isFirstRender } = this.state;
@@ -63,4 +47,3 @@ class LyricModal extends React.PureComponent {
     }
 }
 LyricModal.displayName = 'LyricModal';
-export default withRouter(LyricModal);
