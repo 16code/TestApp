@@ -38,7 +38,7 @@ export default class Img extends React.Component {
                 this.removeEvent();
                 this.visible = true;
                 this.imgElement.src = src;
-                this.imgElement.classList.add('loaded');
+                this.imgElement.classList.remove('lazyimg');
             };
             image.src = src;
         }

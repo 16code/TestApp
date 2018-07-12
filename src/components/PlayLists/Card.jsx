@@ -14,12 +14,15 @@ export default class Card extends React.PureComponent {
         const { data } = this.props;
         console.log(data);
     };
+    static defaultProps = {
+        albumSize: '140y140'
+    };
     render() {
-        const { data, playerState, currentPlay } = this.props;
+        const { data, playerState, currentPlay, albumSize } = this.props;
         const meta = <a href="?13131">{data.name}</a>;
         return (
             <article className={styles['playlist-item']} key={data.id}>
-                <Thumb source={data.coverImgUrl} size="200y200" metaExtra={meta} lazyload={false} />
+                <Thumb source={data.coverImgUrl} size={albumSize} metaExtra={meta} lazyload={false} />
                 <PlayCount className={styles['playlist-item-count']} number={data.playCount} />
                 <PlayControl
                     size="large"

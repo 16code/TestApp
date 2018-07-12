@@ -26,10 +26,10 @@ export default class Dashboard extends React.PureComponent {
         this.setState({ playlist: playlist, topSongs: topboard, newSongs: latest, artists, isFetching: false });
     }
     renderPlaylist = item => {
-        return <PlayList.Card data={item} />;
+        return <PlayList.Card data={item} albumSize="180y180" />;
     };
     renderSong = item => {
-        return <SongList.Item albumSize="52y52" data={item} />;
+        return <SongList.Item data={item} albumSize="52y52" />;
     };
     render() {
         const { playlist, topSongs, newSongs, artists, isFetching } = this.state;

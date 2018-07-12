@@ -14,6 +14,19 @@ export default class PlayList extends ListBase {
         itemLayout: 'vertical'
     };
     scrollingWrapper = React.createRef();
+    componentDidMount() {
+        this.wrap = this.scrollingWrapper.current;
+        this.init();
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.itemLayout !== this.props.itemLayout) {
+            this.init();
+        }
+    }
+    init() {
+        const { itemLayout, dataSource } = this.props;
+        this.wrap.setAttribute('style', this.getWrapperStyles(itemLayout, dataSource.length));
+    }
     getWrapperStyles(itemLayout, len) {
         const isHorizontalLayout = itemLayout === 'horizontal';
         const styleStr = isHorizontalLayout
@@ -21,15 +34,9 @@ export default class PlayList extends ListBase {
                 'grid-template-columns': `repeat(${len}, minmax(1.4rem, 1fr))`
             }
             : { width: '100%' };
-
         return Object.keys(styleStr)
             .map(key => `${key}: ${styleStr[key]}`)
             .join(' ');
-    }
-    componentDidUpdate() {
-        const { itemLayout, dataSource } = this.props;
-        const wrap = this.scrollingWrapper.current;
-        wrap.setAttribute('style', this.getWrapperStyles(itemLayout, dataSource.length));
     }
     render() {
         const { itemLayout } = this.props;
