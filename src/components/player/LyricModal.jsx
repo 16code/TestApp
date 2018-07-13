@@ -18,8 +18,14 @@ export default class LyricModal extends React.Component {
         return null;
     }
     shouldComponentUpdate(nextProps) {
-        const { playingSongId, visible } = this.props;
-        return nextProps.playingSongId !== playingSongId || nextProps.visible !== visible;
+        const { visible, data, playingSongId, isFetching, playerState } = this.props;
+        return (
+            nextProps.visible !== visible ||
+            (data && data.id !== nextProps.data.id) ||
+            playingSongId !== nextProps.playingSongId ||
+            playerState !== nextProps.playerState ||
+            isFetching !== nextProps.isFetching
+        );
     }
     render() {
         const { container, isFirstRender } = this.state;
