@@ -3,7 +3,6 @@ const asyncComponent = getComponent => {
     return class extends React.Component {
         displayName = 'AsyncComponent';
         state = { Component: null };
-        firstRender = true;
         constructor() {
             super();
             this.unMount = false;
@@ -20,20 +19,18 @@ const asyncComponent = getComponent => {
             }
         }
         shouldComponentUpdate(nextProps) {
-            if (nextProps.location.pathname === this.props.location.pathname && this.firstRender) {
+            if (nextProps.location.pathname === this.props.location.pathname && !this.state.Component) {
                 return true;
             }
             return nextProps.location.pathname !== this.props.location.pathname;
         }
-        componentDidUpdate(prevProps) {
-            this.firstRender = false;
-            if (prevProps.location.pathname !== this.props.location.pathname) {
-                this.applyRouterTransition();
-            }
-        }
+        // componentDidUpdate(prevProps) {
+        //     if (prevProps.location.pathname !== this.props.location.pathname) {
+        //         this.applyRouterTransition();
+        //     }
+        // }
         componentWillUnmount() {
             this.unMount = true;
-            this.firstRender = true;
             if (this.componentRef) this.componentRef.setState = () => {};
         }
         async applyRouterTransition() {

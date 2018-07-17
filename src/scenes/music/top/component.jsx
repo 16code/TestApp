@@ -1,4 +1,4 @@
-import DocumentTitle from 'react-document-title';
+import DocumentTitle from 'components/DocumentTitle';
 import Box from 'components/Box';
 import SongList from 'components/SongLists';
 import { FullSpinner } from 'components/Spinner';
@@ -48,7 +48,7 @@ export default class MusicTop extends React.Component {
     render() {
         const { topSongs, isFetching, title } = this.state;
         return (
-            <DocumentTitle title={`${title} - React Music`}>
+            <DocumentTitle title={title}>
                 <Box style={{ height: '100%' }}>
                     {!isFetching && (
                         <SongList dataSource={topSongs} loading={isFetching} renderItem={this.renderSong} rowKey="id" />

@@ -4,7 +4,7 @@ import SideLayout from 'layouts/SideLayout';
 import Thumb from 'components/Thumb';
 import Component from './component';
 
-export default class Forms extends React.PureComponent {
+export default class MusicTop extends React.PureComponent {
     state = {
         categories: []
     };
