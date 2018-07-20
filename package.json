@@ -63,6 +63,7 @@
         "postcss-loader": "^2.1.5",
         "pre-commit": "^1.2.2",
         "prettier-eslint": "^8.8.1",
+        "query-string": "^6.1.0",
         "react-hot-loader": "^4.1.2",
         "redux-logger": "^3.0.6",
         "source-map-loader": "^0.2.3",
