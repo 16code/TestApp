@@ -5,8 +5,8 @@ export const menuData = [
         children: [
             {
                 name: 'Dashboard',
-                path: 'dashboard',
-                icon: 'dashborad'
+                path: 'dashboard'
+                // icon: 'dashborad'
             },
             {
                 name: 'NotFound',
@@ -34,6 +34,20 @@ export const menuData = [
         ]
     },
     {
+        name: 'Artist',
+        path: 'artist',
+        children: [
+            {
+                name: '推荐歌手',
+                path: 'recommend'
+            },
+            {
+                name: '全部歌手',
+                path: ''
+            }
+        ]
+    },
+    {
         name: 'PlayList',
         path: 'playList',
         children: [
@@ -50,20 +64,20 @@ const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-
 function isUrl(path) {
     return reg.test(path);
 }
-function formatter(data, parentPath = '/', parentAuthRole) {
-    parentPath = parentPath.replace(/\/\/\//, '/');
+function formatter(data, parentPath, parentAuthRole) {
     return data.map(item => {
         let { path } = item;
         if (!isUrl(path)) {
-            path = parentPath + item.path;
+            path = parentPath ? parentPath + item.path : item.path;
         }
         const result = {
             ...item,
-            path,
+            path: path.replace(/\/$/, ''),
             authRole: item.role || parentAuthRole
         };
         if (item.children) {
-            result.children = formatter(item.children, `${parentPath}${item.path}/`, item.role);
+            const parent = item.path === '/' ? '/' : `/${item.path}/`;
+            result.children = formatter(item.children, parent, item.role);
         }
         return result;
     });
